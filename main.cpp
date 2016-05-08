@@ -172,10 +172,10 @@ int main(int argc, char** argv)
 				mat_multLineLine(i, -mult, pivo);
 			}
 
-			char cont;
-			cin >> cont;
-			if(cont == 'a')
-				solved = true;
+			//char cont;
+			//cin >> cont;
+			//if(cont == 'a')
+			//	solved = true;
 			
 
 			if(solved)
@@ -233,7 +233,7 @@ int main(int argc, char** argv)
 					
 					free(base);
 				}else{
-					cout << "z* = -inf" << endl;
+					cout << "z* = -inf   sem solução" << endl;
 				}
 
 				for(int i = 0; i < m1; ++i)
