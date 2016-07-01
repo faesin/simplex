@@ -101,17 +101,18 @@ void primeiraFase()
 			baseT[pivot - 2] = costIndex;
 
 	}while(!solved);
+
+	cout << "\t\tFim da primeira fase" << endl << endl;
 }
 
 void segundaFase()
 {
-
 	bool solved = false;
 	do{
 		imprimeTablo();
 		int costIndex = 0, pivot = 2;
 		for(int j = 0; j < nm11-1 ;++j)
-			if(mat[1][j] < mat[1][costIndex])
+			if(mat[1][j] < mat[1][costIndex] && mat[0][j] == 0)
 				costIndex = j;
 
 		if(mat[1][costIndex] >= 0)
@@ -120,7 +121,7 @@ void segundaFase()
 			break;
 		}
 
-		//cout << "zjcj = "  << costIndex << " -> " << mat[1][costIndex] << endl;
+		cout << "zjcj = "  << costIndex << " -> " << mat[1][costIndex] << endl;
 		for(int i = 2; i < m11; ++i)
 			if(mat[i][costIndex] > 0)
 			{
@@ -131,9 +132,7 @@ void segundaFase()
 
 		if(pivot == 2 && mat[pivot][costIndex] < 0)
 		{
-			//cout << pivot << " " << mat[pivot][costIndex] << endl;
-			if(mat[0][costIndex] == 0)
-				noSolution = true;
+			cout << "pivot = " << pivot << " (" << mat[pivot][costIndex] << ")" <<endl;
 			solved = true;
 			break;
 		}
@@ -152,6 +151,8 @@ void segundaFase()
 	}while(!solved);
 
 	imprimeTablo();
+
+	cout << "\t\tFim da segunda fase" << endl << endl;
 }
 
 int main(int argc, char** argv)
@@ -237,6 +238,8 @@ int main(int argc, char** argv)
 			if(noSolution)
 				cout << "z* = -inf" << endl;
 			else{
+				if(mat[1][nm11-1] != 0)
+					mat[1][nm11-1] *= -1;
 				cout << "z* = " << mat[1][nm11-1] << "\t";
 				
 				bool mult = false;
@@ -262,9 +265,29 @@ int main(int argc, char** argv)
 				
 				for(int l = 0; l < nm11-1; ++l)
 					cout << " " << fBase[l];
-				cout << " )" << endl;
-			}
+				cout << " ) ";
 
+				for(int j = 0; j < nm11-1; ++j)
+					if(mat[1][j] == 0)
+					{
+						bool isBase = false;
+						for(int k = 0; k < m; ++k)
+							if(baseT[k] == j)
+							{
+								isBase = true;
+								break;
+							}
+
+						if(!isBase)
+							mult = true;
+					}
+
+				if(mult)
+					cout << "Soluções Multiplas" << endl;
+				else
+					cout << "Solução Única" << endl;
+
+			}
 		}
 			
 
